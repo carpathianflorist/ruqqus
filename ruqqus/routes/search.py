@@ -50,16 +50,7 @@ def searchlisting(q, v=None, page=1, t="None", sort="top", b=None):
             ).join(
                 Submission.board
             )
-
-    if 'q' in criteria:
-        posts=posts.filter(
-        SubmissionAux.title.ilike(
-            '%' +
-            criteria['q'] +
-            '%'
-            )
-        )
-        
+    
     if 'q' in criteria:
         words=criteria['q'].split()
         words=[SubmissionAux.title.contains(x) for x in words]
