@@ -59,7 +59,15 @@ def searchlisting(q, v=None, page=1, t="None", sort="top", b=None):
             '%'
             )
         )
-
+        
+    if 'q' in criteria:
+        words=criteria['q'].split()
+        words=[SubmissionAux.title.contains(x) for x in words]
+        words=tuple(words)
+        posts=posts.filter(words)
+       )
+   )
+        
     if 'author' in criteria:
         posts=posts.filter(
                 Submission.author_id==get_user(criteria['author']).id,
@@ -182,8 +190,6 @@ def search(v, search_type="posts"):
         term=query.lstrip('+')
         term=term.replace('\\','')
         term=term.replace('_','\_')
-        term=term.replace(' ','%')
-
 
         boards = g.db.query(Board).filter(
             Board.name.ilike(f'%{term}%'))
