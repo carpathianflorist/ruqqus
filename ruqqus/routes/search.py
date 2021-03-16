@@ -64,7 +64,7 @@ def searchlisting(q, v=None, page=1, t="None", sort="top", b=None):
         posts=posts.filter(
                 Submission.author_id==get_user(criteria['author']).id,
                 User.is_private==False,
-                User.is_deleted==False
+                User.is_deleted==True
             )
 
     if b:
@@ -182,6 +182,8 @@ def search(v, search_type="posts"):
         term=query.lstrip('+')
         term=term.replace('\\','')
         term=term.replace('_','\_')
+        term=term.replace(' ','%')
+
 
         boards = g.db.query(Board).filter(
             Board.name.ilike(f'%{term}%'))
